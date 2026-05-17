@@ -1,0 +1,64 @@
+{
+  "name": "@openapi-typescript-infra/k8s-run",
+  "version": "1.0.0",
+  "description": "Run an interactive version of a standard OpenAPI Typescript deployment",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "bin": "build/index.js",
+  "author": "Developers <developers@pyralis.com>",
+  "license": "MIT",
+  "packageManager": "yarn@3.8.7",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && yarn dlx glob-chmod 755 build/*",
+    "clean": "yarn dlx rimraf ./build",
+    "lint": "eslint .",
+    "postinstall": "cpconfig",
+    "test": "vitest"
+  },
+  "keywords": [
+    "kubernetes",
+    "sesame"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openapi-typescript-infra/k8s-run.git"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/exec",
+        {
+          "publishCmd": "yarn dlx pinst --disable"
+        }
+      ],
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
+  },
+  "config": {
+    "cpconfig": "@openapi-typescript-infra/cpconfig"
+  },
+  "devDependencies": {
+    "@openapi-typescript-infra/cpconfig": "^1.1.0",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/github": "^12.0.8",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^25.8.0",
+    "cpconfig": "^1.5.1",
+    "eslint": "^9.39.4",
+    "prettier": "^3.8.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.6"
+  },
+  "dependencies": {
+    "@kubernetes/client-node": "^1.4.0",
+    "minimist": "^1.2.8",
+    "username": "^7.0.0"
+  }
+}

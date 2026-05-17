@@ -1,0 +1,23 @@
+build/
+node_modules/
+/test-results/
+/a11y-reports
+/playwright-report/
+/playwright/.cache/
+src/generated
+test-results.json
+
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Managed by cpconfig
+/.commitlintrc.yaml
+/eslint.config.mts
+/tsconfig.json
+/tsconfig.build.json
+/.prettierrc.yaml
+/vitest.config.ts
