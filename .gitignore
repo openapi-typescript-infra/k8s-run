@@ -1,5 +1,6 @@
 build/
 node_modules/
+*.tsbuildinfo
 /test-results/
 /a11y-reports
 /playwright-report/
