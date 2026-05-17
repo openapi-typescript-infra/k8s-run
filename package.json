@@ -15,6 +15,11 @@
     "postinstall": "cpconfig",
     "test": "vitest"
   },
+  "files": [
+    "build/",
+    "src/",
+    "README.md"
+  ],
   "keywords": [
     "kubernetes",
     "sesame"
