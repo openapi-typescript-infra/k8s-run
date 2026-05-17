@@ -43,6 +43,9 @@
   "config": {
     "cpconfig": "@openapi-typescript-infra/cpconfig"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@openapi-typescript-infra/cpconfig": "^1.1.0",
     "@semantic-release/exec": "^7.1.0",
