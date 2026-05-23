@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 import { spawn } from 'child_process';
+import { pathToFileURL } from 'url';
 
 import minimist from 'minimist';
 import { usernameSync } from 'username';
@@ -127,7 +128,11 @@ export async function run() {
   }
 }
 
-if (require.main === module) {
+function isMainModule() {
+  return Boolean(process.argv[1]) && import.meta.url === pathToFileURL(process.argv[1]).href;
+}
+
+if (isMainModule()) {
   run().catch((error) => {
     console.error(error);
     process.exit(1);

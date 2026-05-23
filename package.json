@@ -2,6 +2,7 @@
   "name": "@openapi-typescript-infra/k8s-run",
   "version": "0.0.0",
   "description": "Run an interactive version of a standard OpenAPI Typescript deployment",
+  "type": "module",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "bin": "build/index.js",
