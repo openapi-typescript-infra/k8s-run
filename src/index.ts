@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 import { spawn } from 'child_process';
-import { pathToFileURL } from 'url';
+import { realpathSync } from 'fs';
+import { fileURLToPath } from 'url';
 
 import minimist from 'minimist';
 import { usernameSync } from 'username';
@@ -128,8 +129,18 @@ export async function run() {
   }
 }
 
-function isMainModule() {
-  return Boolean(process.argv[1]) && import.meta.url === pathToFileURL(process.argv[1]).href;
+export function isMainModule(
+  moduleUrl: string = import.meta.url,
+  argvPath = process.argv[1],
+  importMetaMain: boolean | null | undefined = import.meta.main,
+) {
+  if (typeof importMetaMain === 'boolean') {
+    return importMetaMain;
+  }
+  if (!argvPath) {
+    return false;
+  }
+  return realpathSync(fileURLToPath(moduleUrl)) === realpathSync(argvPath);
 }
 
 if (isMainModule()) {
