@@ -1,8 +1,9 @@
-import { describe, expect, test } from 'vitest';
 import { mkdtempSync, symlinkSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
+
+import { describe, expect, test } from 'vitest';
 
 import { isMainModule, run } from '../src/index';
 
