@@ -4,14 +4,46 @@ import { join } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 
 import { describe, expect, test } from 'vitest';
+import { KubeConfig } from '@kubernetes/client-node';
 
-import { isMainModule, run } from '../src/index';
+import { isMainModule, parseArgs, resolveNamespace, run } from '../src/index';
 
 const testFilePath = fileURLToPath(import.meta.url);
 
 describe('module export', () => {
   test('should export something', () => {
     expect(typeof run).toBe('function');
+  });
+});
+
+describe('namespace', () => {
+  function kubeConfig(namespace?: string) {
+    const config = new KubeConfig();
+    config.loadFromOptions({
+      clusters: [],
+      users: [],
+      contexts: [{ name: 'test', cluster: '', user: '', namespace }],
+      currentContext: 'test',
+    });
+    return config;
+  }
+
+  test('uses the namespace from the current context', () => {
+    expect(resolveNamespace(kubeConfig('current-namespace'))).toBe('current-namespace');
+  });
+
+  test('uses default when the current context has no namespace', () => {
+    expect(resolveNamespace(kubeConfig())).toBe('default');
+  });
+
+  test('allows the namespace to be overridden', () => {
+    expect(resolveNamespace(kubeConfig('current-namespace'), 'override-namespace')).toBe(
+      'override-namespace',
+    );
+  });
+
+  test('parses -n as a namespace override', () => {
+    expect(parseArgs(['-n', 'override-namespace']).namespace).toBe('override-namespace');
   });
 });
 

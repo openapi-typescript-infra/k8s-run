@@ -19,3 +19,10 @@ And then to use it:
 ```sh
 $ k8s-run your-service
 ```
+
+By default, `k8s-run` uses the namespace configured on the active Kubernetes
+context. Use `-n` (or `--namespace`) to override it:
+
+```sh
+$ k8s-run -n another-namespace your-service
+```

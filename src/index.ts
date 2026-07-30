@@ -9,10 +9,15 @@ import { usernameSync } from 'username';
 import type { V1Pod } from '@kubernetes/client-node';
 import { AppsV1Api, CoreV1Api, KubeConfig } from '@kubernetes/client-node';
 
-const argv = minimist(process.argv.slice(2), {
-  string: ['context', 'namespace'],
-  boolean: ['restartable', 'take-traffic', 'retain'],
-});
+export function parseArgs(args: string[]) {
+  return minimist(args, {
+    string: ['context', 'namespace'],
+    boolean: ['restartable', 'take-traffic', 'retain'],
+    alias: { n: 'namespace' },
+  });
+}
+
+const argv = parseArgs(process.argv.slice(2));
 
 const kc = new KubeConfig();
 kc.loadFromDefault();
@@ -33,7 +38,18 @@ if (typeof argv.context === 'string' && argv.context.length > 0) {
 const k8sApi = kc.makeApiClient(AppsV1Api);
 const k8sPodApi = kc.makeApiClient(CoreV1Api);
 
-const ns: string = argv.namespace || 'default';
+export function resolveNamespace(kubeConfig: KubeConfig, override?: string): string {
+  if (override) {
+    return override;
+  }
+
+  const currentContext = kubeConfig.getContextObject(kubeConfig.getCurrentContext());
+  return currentContext?.namespace || 'default';
+}
+
+const namespace =
+  typeof argv.namespace === 'string' && argv.namespace.length > 0 ? argv.namespace : undefined;
+const ns = resolveNamespace(kc, namespace);
 
 function log(...args: unknown[]) {
   if (!argv.quiet) {
@@ -106,7 +122,8 @@ export async function run() {
         'kubectl',
         [
           ...(ctx ? ['--context', ctx] : []),
-          ...(ns !== 'default' ? ['--namespace', ns] : []),
+          '--namespace',
+          ns,
           'exec',
           '-it',
           deployment.metadata.name,
