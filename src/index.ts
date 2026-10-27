@@ -96,6 +96,8 @@ export async function run() {
     delete c.livenessProbe;
     delete c.resources;
     if (c.name === name) {
+      // One-off pods allow editing application files for debugging.
+      c.securityContext = { ...c.securityContext, readOnlyRootFilesystem: false };
       if (argv.restartable) {
         c.command = [
           '/bin/sh',

@@ -55,18 +55,18 @@
   "devDependencies": {
     "@openapi-typescript-infra/cpconfig": "^1.1.0",
     "@semantic-release/exec": "^7.1.0",
-    "@semantic-release/github": "^12.0.8",
+    "@semantic-release/github": "^12.0.10",
     "@types/minimist": "^1.2.5",
-    "@types/node": "^25.8.0",
+    "@types/node": "^26.6.5",
     "cpconfig": "^1.5.1",
-    "eslint": "^9.39.4",
-    "prettier": "^3.8.3",
+    "eslint": "^9.39.5",
+    "prettier": "^3.9.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.12"
   },
   "dependencies": {
-    "@kubernetes/client-node": "^1.4.0",
+    "@kubernetes/client-node": "^2.0.1",
     "minimist": "^1.2.8",
     "username": "^7.0.0"
   }

@@ -7,6 +7,7 @@ This modifies the deployment by:
 1. Turning it into a pod
 2. Removing metadata.labels.app
 3. Modifying the name to add -(username)
+4. Making the main container's root filesystem writable, preserving its other security settings
 
 Usage
 =====
