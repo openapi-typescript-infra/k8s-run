@@ -1,13 +1,14 @@
 # k8s-run
 
-Run a pod that mirrors a deployment but without resource constraints and readiness probes. Drops you into a shell and removes the pod when you finish.
+Run a pod that mirrors a deployment but without resource constraints or startup, liveness, and readiness probes. Drops you into a shell and removes the pod when you finish.
 
 This modifies the deployment by:
 
 1. Turning it into a pod
 2. Removing metadata.labels.app
 3. Modifying the name to add -(username)
-4. Making the main container's root filesystem writable, preserving its other security settings
+4. Removing startup, liveness, and readiness probes so debugging containers are not restarted by application health checks
+5. Making the main container's root filesystem writable, preserving its other security settings
 
 Usage
 =====

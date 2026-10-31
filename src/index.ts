@@ -94,6 +94,7 @@ export async function run() {
   deployment.spec?.containers.forEach((c) => {
     delete c.readinessProbe;
     delete c.livenessProbe;
+    delete c.startupProbe;
     delete c.resources;
     if (c.name === name) {
       // One-off pods allow editing application files for debugging.
